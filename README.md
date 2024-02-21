@@ -13,6 +13,11 @@ Screenshot of an example report:
 
 mod_sec_report requires **Python v3**.
 
+Use VirtualEnv : 
+
+    $ virtualenv . 
+    $ source bin/activate
+
 Install the dependencies:
 
     $ pip install -r requirements.txt
