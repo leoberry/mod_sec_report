@@ -54,7 +54,9 @@
             <th>Status</th>
             <th>Remote addr</th>
             <th>Host</th>
+            <th>Method</th>
             <th>Request</th>
+            <th>User Agent</th>
             <th>Main err</th>
             <th></th>
         </tr>
@@ -64,7 +66,9 @@
             <td><tt>{{ entry["transaction"]["response"]["http_code"]|e }}</tt></td>
             <td><tt>{{ entry["transaction"]["client_ip"]|e }}</tt></td>
             <td><tt>{{ entry["transaction"]["request"]["headers"]["host"]|e }}</tt></td>
+            <td><tt>{{ entry["transaction"]["request"]["method"]|e }}</tt></td>
             <td><tt>{{ entry["transaction"]["request"]["uri"]|e }}</tt></td>
+            <td><tt>{{ entry["transaction"]["request"]["headers"]["user-agent"]|e }}</tt></td>
             <td>
                 {% if entry["errors"] %}
                      {{ entry["errors"]|e }}
