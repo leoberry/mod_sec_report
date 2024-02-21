@@ -4,6 +4,23 @@
     body {
         font-family: sans-serif;
     }
+
+    header {
+        background-color: #E5EFF7;
+        color: black;
+        padding: 30px;
+        text-align: center;
+    }
+
+    #logo {
+        width: 100px;
+        height: 100px;
+        background: url('https://repository-images.githubusercontent.com/363010961/42a98c00-a969-11eb-946f-2762be8c7d73') no-repeat;
+        background-size: cover;
+        display: inline-block;
+        float: left;
+    }
+
     table {
         border-collapse: collapse;
     }
@@ -48,6 +65,14 @@
 </style>
 </head>
 <body>
+
+    <header>
+        <div id="logo"></div>
+        <h1>OWASP CRS HTML report</h1>
+    </header>
+
+    <p></p>
+
     <table class="requests">
         <tr>
             <th>Date / time</th>
