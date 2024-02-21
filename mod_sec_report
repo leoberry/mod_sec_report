@@ -16,7 +16,7 @@ def parse_modsec_error_msg(err_msg):
     """
     in_kv = False
     parsed = {
-        "main_msg": "??"
+        "main_msg": ""
     }
     prev_token = None
     key = None
@@ -61,15 +61,16 @@ def parse_modsec_line(line):
     """
     entry = json.loads(line)
 
-    transaction_dt = entry["transaction"]["time"]
-    entry["transaction"]["time_parsed"] = datetime.datetime.strptime(transaction_dt, "%d/%b/%Y:%H:%M:%S %z")
+    transaction_dt = entry["transaction"]["time_stamp"]
+    entry["transaction"]["time_parsed"] = datetime.datetime.strptime(transaction_dt, "%a %b %d %H:%M:%S %Y")
 
-    if "body" in entry["request"] and len(entry["request"]["body"]) > 0:
-        entry["request"]["body"] = [entry["request"]["body"][0].encode("ascii", errors="ignore").decode("utf8")]
+    if "body" in entry["transaction"]["request"] and len(entry["transaction"]["request"]["body"]) > 0:
+        entry["request"]["body"] = [entry["transaction"]["request"]["body"][0].encode("ascii", errors="ignore").decode("utf8")]
 
-    entry["errors"] = []
-    for err_msg in entry["audit_data"].get("error_messages", []):
-        entry["errors"].append(parse_modsec_error_msg(err_msg))
+    if len(entry["transaction"]["messages"]) > 0:
+      entry["errors"] = []
+      for err_msg in entry["transaction"]["messages"]:
+        entry["errors"].append(parse_modsec_error_msg(err_msg["message"]))
 
     return entry
 

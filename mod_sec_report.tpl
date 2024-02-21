@@ -52,17 +52,19 @@
         <tr>
             <th>Date / time</th>
             <th>Status</th>
-            <th>Remore addr</th>
+            <th>Remote addr</th>
+            <th>Host</th>
             <th>Request</th>
             <th>Main err</th>
             <th></th>
         </tr>
         {% for entry in entries%}
             <tr class="overview">
-            <td>{{ entry["transaction"]["time"]|e }}</td>
-            <td><tt>{{ entry["response"]["status"]|e }}</tt></td>
-            <td><tt>{{ entry["transaction"]["remote_address"]|e }}</tt></td>
-            <td><tt>{{ entry["request"]["request_line"]|e }}</tt></td>
+            <td>{{ entry["transaction"]["time_stamp"]|e }}</td>
+            <td><tt>{{ entry["transaction"]["response"]["http_code"]|e }}</tt></td>
+            <td><tt>{{ entry["transaction"]["client_ip"]|e }}</tt></td>
+            <td><tt>{{ entry["transaction"]["request"]["headers"]["host"]|e }}</tt></td>
+            <td><tt>{{ entry["transaction"]["request"]["uri"]|e }}</tt></td>
             <td>
                 {% if entry["errors"] %}
                     {{ entry["errors"][0].get("msg", "??")|e }}
@@ -107,7 +109,7 @@
                             <th>Header</th>
                             <th>Value</th>
                         </tr>
-                        {% for header_k, header_v in entry["request"]["headers"].items() %}
+                        {% for header_k, header_v in entry["transaction"]["request"]["headers"].items() %}
                             <tr>
                                 <td><tt>{{ header_k|e }}</tt></td>
                                 <td><tt>{{ header_v|e }}</tt></td>
@@ -115,9 +117,9 @@
                         {% endfor %}
                     </table>
 
-                    {% if entry["request"]["body"] %}
+                    {% if entry["transaction"]["request"]["body"] %}
                         <h3>Body</h3>
-                        <div class="body">{{ "<br><hr><br>".join(entry["request"]["body"])|e }}</div>
+                        <div class="body">{{ "<br><hr><br>".join(entry["transaction"]["request"]["body"])|e }}</div>
                     {% else %}
                         <p><i>No request body</i></p>
                     {% endif %}
@@ -128,7 +130,7 @@
                             <th>Header</th>
                             <th>Value</th>
                         </tr>
-                        {% for header_k, header_v in entry["response"].get("headers", {}).items() %}
+                        {% for header_k, header_v in entry["transaction"]["response"].get("headers", {}).items() %}
                             <tr>
                                 <td><tt>{{ header_k|e }}</tt></td>
                                 <td><tt>{{ header_v|e }}</tt></td>
@@ -136,9 +138,9 @@
                         {% endfor %}
                     </table>
 
-                    {% if entry["response"]["body"] %}
+                    {% if entry["transaction"]["response"]["body"] %}
                         <h3>Body</h3>
-                        <div class="body">{{ entry["response"]["body"]|e }}</div>
+                        <div class="body">{{ entry["transaction"]["response"]["body"]|e }}</div>
                     {% else %}
                         <p><i>No response body</i></p>
                     {% endif %}
