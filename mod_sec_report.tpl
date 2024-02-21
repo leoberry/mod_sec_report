@@ -67,7 +67,7 @@
             <td><tt>{{ entry["transaction"]["request"]["uri"]|e }}</tt></td>
             <td>
                 {% if entry["errors"] %}
-                    {{ entry["errors"][0].get("msg", "??")|e }}
+                     {{ entry["errors"]|e }}
                 {% else %}
                     <i>None</i>
                 {% endif %}
@@ -79,27 +79,33 @@
             <td colspan="6">
                 <div class="details">
                     <h2>ModSecurity Transaction ID</h2>
-                    <p><tt>{{ entry["transaction"]["transaction_id"]|e }}</tt></p>
+                    <p><tt>{{ entry["transaction"]["unique_id"]|e }}</tt></p>
 
                     <h2>Errors</h2>
                     {% if not entry["errors"] %}
                         <i>None</i>
                     {% else %}
                         <table class="details">
-                            <tr>
-                                <th>Rule ID</th>
-                                <th>File</th>
-                                <th>Line</th>
-                                <th>Msg</th>
-                            </tr>
-                            {% for error in entry["errors"] %}
+                            <thead>
                                 <tr>
-                                    <td class="nowrap"><tt>{{ error["id"]|e }}</tt></td>
-                                    <td class="nowrap"><tt>{{ error["file"]|e }}</tt></td>
-                                    <td><tt>{{ error["line"]|e }}</tt></td>
-                                    <td>{{ error["msg"]|e }}</td>
+                                    <th>Rule</th>
+                                    <th>File</th>
+                                    <th>Severity</th>
+                                    <th>Message</th>
+                                    <th>Severity</th>
                                 </tr>
-                            {% endfor %}
+                            </thead>
+                            <tbody>
+                                {% for message in entry["transaction"]['messages'] %}
+                                    <tr>
+                                        <td class="nowrap"><tt>{{ message.details.ruleId|e }}</td>
+                                        <td class="nowrap"><tt>{{ message.details.file|e }}</td>
+                                        <td>{{ message.details.lineNumber|e }}</td>
+                                        <td>{{ message.message|e }}</td>
+                                        <td>{{ message.details.severity|e }}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
                         </table>
                     {% endif %}
 
