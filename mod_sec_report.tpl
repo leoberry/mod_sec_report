@@ -76,10 +76,10 @@
     <table class="requests">
         <tr>
             <th>Date / time</th>
+            <th>Engine</th>
             <th>Status</th>
             <th>Remote addr</th>
             <th>Host</th>
-            <th>Method</th>
             <th>Request</th>
             <th>User Agent</th>
             <th>Main err</th>
@@ -88,11 +88,11 @@
         {% for entry in entries%}
             <tr class="overview">
             <td>{{ entry["transaction"]["time_stamp"]|e }}</td>
+            <td><tt>{{ entry["transaction"]["producer"]["secrules_engine"]|e }}</tt></td>
             <td><tt>{{ entry["transaction"]["response"]["http_code"]|e }}</tt></td>
             <td><tt>{{ entry["transaction"]["client_ip"]|e }}</tt></td>
             <td><tt>{{ entry["transaction"]["request"]["headers"]["host"]|e }}</tt></td>
-            <td><tt>{{ entry["transaction"]["request"]["method"]|e }}</tt></td>
-            <td><tt>{{ entry["transaction"]["request"]["uri"]|e }}</tt></td>
+            <td><tt>{{ entry["transaction"]["request"]["method"]|e }} {{ entry["transaction"]["request"]["uri"]|e }}</tt></td>
             <td><tt>{{ entry["transaction"]["request"]["headers"]["user-agent"]|e }}</tt></td>
             <td>
                 {% if entry["errors"] %}
