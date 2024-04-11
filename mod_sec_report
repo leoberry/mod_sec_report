@@ -7,7 +7,7 @@ import codecs
 import shlex
 import datetime
 import gzip
-from jinja2 import Template
+from jinja2 import Template, Environment, FileSystemLoader
 
 def parse_modsec_line(line):
     """
@@ -51,8 +51,8 @@ def parse_modsec_file(path):
 
 
 def output(entries):
-    with open("mod_sec_report.tpl") as file_:
-        template = Template(file_.read())
+    environment = Environment(loader=FileSystemLoader("templates/"))
+    template = environment.get_template("mod_sec_report.tpl")
     print(template.render(entries=entries))
 
 
