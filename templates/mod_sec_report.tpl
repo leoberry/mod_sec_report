@@ -33,6 +33,10 @@
     }
     td {
         padding: 0.2em 0.5em 0.2em 0.5em;
+        word-break: break-all;
+    }
+    tt {
+        word-break: break-all;
     }
     th {
         background-color: #444;
@@ -105,7 +109,7 @@
             </tr>
 
             <tr class="details">
-            <td colspan="6">
+            <td colspan="9">
                 <div class="details">
                     <h2>ModSecurity Transaction ID</h2>
                     <p><tt>{{ entry["transaction"]["unique_id"]|e }}</tt></p>
