@@ -51,7 +51,7 @@ def parse_modsec_file(path):
 
 
 def output(entries):
-    environment = Environment(loader=FileSystemLoader("templates/"))
+    environment = Environment(loader=FileSystemLoader("templates/"), autoescape=True)
     template = environment.get_template("mod_sec_report.tpl")
     print(template.render(entries=entries))
 
