@@ -23,6 +23,12 @@
 
     table {
         border-collapse: collapse;
+        border-radius: 15px;
+        box-sizing: border-box;
+    }
+    tr {
+        border: 1px solid #1A1A1A;
+        box-sizing: border-box;
     }
     table, th, td {
         border: 1px solid black;
@@ -37,6 +43,8 @@
     }
     tt {
         word-break: break-all;
+        display: flex;
+        align-items: center;
     }
     th {
         background-color: #444;
@@ -55,6 +63,10 @@
         display: none;
         opacity: 0.7;
     }
+    table.requests td.entries {
+        text-align: center;
+        vertical-align: middle;
+    }
     div.details {
         margin: 32px;
     }
@@ -65,6 +77,46 @@
         font-family: monospace;
         overflow-x: auto;
         width: 1024px;
+    }
+    .button-27 {
+    appearance: none;
+    background-color: #000000;
+    border: 2px solid #1A1A1A;
+    border-radius: 15px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    cursor: pointer;
+    display: inline-block;
+    font-family: Roobert,-apple-system,BlinkMacSystemFont,"Segoe UI",Helvetica,Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+    font-size: 16px;
+    font-weight: 600;
+    line-height: normal;
+    margin: 0;
+    min-width: 0;
+    outline: none;
+    padding: 16px 24px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 300ms cubic-bezier(.23, 1, 0.32, 1);
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    width: 120;
+    will-change: transform;
+    }
+
+    .button-27:disabled {
+    pointer-events: none;
+    }
+
+    .button-27:hover {
+    box-shadow: rgba(0, 0, 0, 0.25) 0 8px 15px;
+    transform: translateY(-2px);
+    }
+
+    .button-27:active {
+    box-shadow: none;
+    transform: translateY(0);
     }
 </style>
 </head>
@@ -79,33 +131,33 @@
 
     <table class="requests">
         <tr>
-            <th>Date / time</th>
-            <th>Engine</th>
+            <th width="200" >Date / time</th>
+            <th width="100" >Engine</th>
             <th>Status</th>
-            <th>Remote addr</th>
-            <th>Host</th>
+            <th width="150">Remote addr</th>
+            <th width="400">Host</th>
             <th>Request</th>
             <th>User Agent</th>
             <th>Main err</th>
-            <th></th>
+            <th width="75" ></th>
         </tr>
         {% for entry in entries%}
             <tr class="overview">
-            <td>{{ entry["transaction"]["time_stamp"]|e }}</td>
-            <td><tt>{{ entry["transaction"]["producer"]["secrules_engine"]|e }}</tt></td>
-            <td><tt>{{ entry["transaction"]["response"]["http_code"]|e }}</tt></td>
-            <td><tt>{{ entry["transaction"]["client_ip"]|e }}</tt></td>
-            <td><tt>{{ entry["transaction"]["request"]["headers"]["host"]|e }}</tt></td>
-            <td><tt>{{ entry["transaction"]["request"]["method"]|e }} {{ entry["transaction"]["request"]["uri"]|e }}</tt></td>
-            <td><tt>{{ entry["transaction"]["request"]["headers"]["user-agent"]|e }}</tt></td>
-            <td>
+            <td class="entries" >{{ entry["transaction"]["time_stamp"]|e }}</td>
+            <td class="entries" ><tt>{{ entry["transaction"]["producer"]["secrules_engine"]|e }}</tt></td>
+            <td class="entries" ><tt>{{ entry["transaction"]["response"]["http_code"]|e }}</tt></td>
+            <td class="entries" ><tt>{{ entry["transaction"]["client_ip"]|e }}</tt></td>
+            <td class="entries" ><tt>{{ entry["transaction"]["request"]["headers"]["host"]|e }}</tt></td>
+            <td class="entries" ><tt>{{ entry["transaction"]["request"]["method"]|e }} {{ entry["transaction"]["request"]["uri"]|e }}</tt></td>
+            <td class="entries" ><tt>{{ entry["transaction"]["request"]["headers"]["user-agent"]|e }}</tt></td>
+            <td class="entries" >
                 {% if entry["errors"] %}
                      {{ entry["errors"]|e }}
                 {% else %}
                     <i>None</i>
                 {% endif %}
             </td>
-            <td><a href="#" onClick="return showDetails(this);">Details</a></td>
+            <td><button type="button" class="button-27" role="button" onClick="return showDetails(this);">Details</button></td>
             </tr>
 
             <tr class="details">
